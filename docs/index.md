@@ -138,7 +138,7 @@ Use the `DUPLICACY_<STORAGENAME>_PASSWORD` environment variable if you do not wa
 export DUPLICACY_NACHOSTORAGE_PASSWORD="ThisIsNotAVerySecurePassword"
 ~~~
 
-**NOTE**: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that `nachoStorage` would be written as `NACHOSTORAGE`.     
+**NOTE**: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that `nachoStorage` would be written as `NACHOSTORAGE` using the storage name in this tutorial.     
   
 # Restoring backups    
 
