@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 [Duplicacy](https://duplicacy.com) is state-of-the-art backup tool that has extensive cloud support. It also supports local disks and your own SFTP servers.     
 
@@ -7,7 +7,7 @@ The software does require a license but the command-line interface (CLI) version
   
 We’ll be using the **CLI** version for this tutorial.
 
-## Installation    
+# Installation    
 
 **STEP 1:**   
 
@@ -46,7 +46,7 @@ Move the file to the **/usr/bin** directory.
 $ sudo mv duplicacy /usr/bin/
 ~~~
 
-## Initialize the remote storage and repository
+# Initialize the remote storage and repository
 
 The **duplicacy init** command is used to initialize the remote storage and the backup directory.
 ~~~
@@ -68,12 +68,12 @@ An example scenario will make this easier to understand.
 3. Backup directory on the **sftp** server: **photobackup**
 4. Name of backup job: **photoBackup**. This refers to the `<snapshot id>` option.
 5. Name of remote storage: **nachoStorage**. This refers to the `-storage-name <name>` option.
-    
-> For me, **sftp://curt@nacho.local/remotePhotos** would be the complete `<storage url>`.    
+
+For me, **sftp://curt@nacho.local/remotePhotos** would be the complete `<storage url>`.    
 
 **STEP 1:**      
 
-Initialize the remote storage and repository. Run this from the directory you are backing up:
+Initialize the remote storage and repository. Run the following command from the directory you are backing up:
 ~~~
 $ duplicacy init -e -storage-name nachoStorage photoBackup sftp://curt@nacho.local/photobackup
 ~~~
@@ -85,9 +85,9 @@ Enter storage password for sftp://curt@nacho.local/remotePhotos:
 Re-enter storage password:
 ~~~
 
-1. Hit `enter` to leave the password blank if you use `ssh` keys.       
-2. Type in the full path to your **private** `ssh` key. For me, I would enter /home/curt/.ssh/id_rsa for the path.  
-3. Type in the storage password you choose to use.
+1. Hit `enter` to leave the password blank if you use **ssh** keys.       
+2. Type in the full path to your **private ssh** key. For me, I would enter **/home/curt/.ssh/id_rsa** for the path.  
+3. Type in a storage password you choose to use.
 
 **STEP 2:**    
 
@@ -117,7 +117,7 @@ Change the line to this:
          },
 ~~~
 
-## Running the backup
+# Running the backup
 
 **STEP 1:**    
 
@@ -129,14 +129,13 @@ $ duplicacy backup -stats
 You will be prompted to enter the storage password. 
 Enter the storage password you created when you initialized the repository.
 
-Use the `DUPLICACY_<STORAGENAME>_PASSWORD` environment variable if you do not want to type in the password every time you run the backup command.    
+Use the `DUPLICACY_<STORAGENAME>_PASSWORD` environment variable if you do not want to type in the password every time you run the backup command.  
 
-You can run the **export** command or specify this variable in a **bash** script if you want to use this.
+* You can run the **export** command or specify this variable in a **bash** script if you want to use this.
 
-For example, if your storage password was `ThisIsNotAVerySecurePassword`, you would run the following from your terminal:
+* For example, if your storage password was `ThisIsNotAVerySecurePassword`, you would run the following from your terminal or add it to a **bash** script:
 ~~~
 export DUPLICACY_NACHOSTORAGE_PASSWORD="ThisIsNotAVerySecurePassword"
 ~~~
-You could also add that line to a **bash** script to avoid typing in your storage password every time.
 
 **NOTE**: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that `nachoStorage` needs to be written as `NACHOSTORAGE`.
