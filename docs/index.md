@@ -48,7 +48,7 @@ $ sudo mv duplicacy /usr/bin/
 
 ## Initialize the remote storage and repository
 
-The `duplicacy init` command is used to initialize the remote storage and the backup directory.
+The **duplicacy init** command is used to initialize the remote storage and the backup directory.
 ~~~
 duplicacy init [command options] <snapshot id> <storage url>
 ~~~
