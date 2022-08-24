@@ -69,13 +69,13 @@ An example scenario will make this easier to understand.
 4. Name of backup job: **photoBackup**. This refers to the `<snapshot id>` option.
 5. Name of remote storage: **nachoStorage**. This refers to the `-storage-name <name>` option.
     
-> For me, **sftp://curt@nacho.local/remotePhotos** would be the `<storage url>`.    
+> For me, **sftp://curt@nacho.local/remotePhotos** would be the complete `<storage url>`.    
 
 **STEP 1:**      
 
-Initialize the remote storage and repository.
+Initialize the remote storage and repository. Run this from the directory you are backing up:
 ~~~
-$ duplicacy init -e -storage-name nachoStorage photoBackup sftp://curt@nacho.local/remotePhotos
+$ duplicacy init -e -storage-name nachoStorage photoBackup sftp://curt@nacho.local/photobackup
 ~~~
 You will see the following prompts:
 ~~~
@@ -84,25 +84,23 @@ Enter the path of the private key file:
 Enter storage password for sftp://curt@nacho.local/remotePhotos:
 Re-enter storage password:
 ~~~
-`Enter SSH password`:&nbsp; Hit the `enter` key on your keybord to leave the password blank if you use `ssh` keys.       
 
-`Enter the path of the private key file`:&nbsp; Type in the full path to your **private** `ssh` key. 
-> For me, I would enter **/home/curt/.ssh/id_rsa** for the path.  
-
-`Enter storage password`:&nbsp; Type in the storage password you wish to use.
+1. Hit `enter` to leave the password blank if you use `ssh` keys.       
+2. Type in the full path to your **private** `ssh` key. For me, I would enter /home/curt/.ssh/id_rsa for the path.  
+3. Type in the storage password you choose to use.
 
 **STEP 2:**    
 
-**Duplicacy** creates a configuration folder named `.duplicacy` after the initialization is completed.   
+**Duplicacy** creates a configuration folder named **.duplicacy** in the current directory after the initialization is finished.   
 
-Copy your **private** `ssh` key to this directory. Here is how I would copy it on my system:
+Copy your **private ssh** key to this directory. Here is how I would copy it on my system:
 ~~~
 $ cp /home/curt/.ssh/id_rsa /home/curt/Photos/.duplicacy/
 ~~~
 
 **STEP 3:**    
 
-Edit the `.duplicacy/preferences` file to change the `"keys":` line. Use a plan text editor such as `vim` or `nano`.
+Edit the **.duplicacy/preferences** file with a plain text editor to change the **"keys":**&nbsp; line.
 ~~~
 $ vim .duplicacy/preferences
 ~~~
@@ -112,32 +110,33 @@ Default setting:
 "keys": null,
 ~~~
 
-Change `"keys": null,` to this:
+Change the line to this:
 ~~~
 "keys": {
             "ssh_key_file": ".duplicacy/id_rsa"
          },
 ~~~
-> Use a text editor such as `vim` or `nano` to edit the file because spacing is **important**.
 
-## Running the backup command
+## Running the backup
 
 **STEP 1:**    
 
-Run the `duplicacy backup` command from the backup directory.
+Run the **duplicacy backup** command from the backup directory.
 ~~~
 $ duplicacy backup -stats
 ~~~
 
 You will be prompted to enter the storage password. 
-Enter the storage password you created when you initialized the repostiory.
+Enter the storage password you created when you initialized the repository.
 
-If you do not want to enter the storage password every time you run the backup, you can use the `DUPLICACY_<STORAGENAME>_PASSWORD` environment variable. If you want to automate your backups by running them from a `bash` script via `cron`, you will need to also use this variable.    
+Use the `DUPLICACY_<STORAGENAME>_PASSWORD` environment variable if you do not want to type in the password every time you run the backup command.    
 
-If your storage password is `ThisIsNotAVerySecurePassword`, the command would like this in our example scenario:
+You can run the **export** command or specify this variable in a **bash** script if you want to use this.
+
+For example, if your storage password was `ThisIsNotAVerySecurePassword`, you would run the following from your terminal:
 ~~~
 export DUPLICACY_NACHOSTORAGE_PASSWORD="ThisIsNotAVerySecurePassword"
 ~~~
-**NOTE**: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that `nachoStorage` needs to be written as `NACHOSTORAGE`.
+You could also add that line to a **bash** script to avoid typing in your storage password every time.
 
-You can run this shell command before you run the `duplicacy backup` command or add it to a `bash` script.
+**NOTE**: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that `nachoStorage` needs to be written as `NACHOSTORAGE`.
