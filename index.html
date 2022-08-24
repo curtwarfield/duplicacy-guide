@@ -84,7 +84,86 @@ The software does require a license but the command-line interface (CLI) version
 <p>Make the file executable.</p>
 <pre><code>$ chmod +x duplicacy_linux_x64_2.7.2
 </code></pre>
+<p><strong>STEP 3:</strong>  </p>
+<p>Rename the file to <code>duplicacy</code>.</p>
+<pre><code>$ mv duplicacy_linux_x64_2.7.2 duplicacy
+</code></pre>
+<p><strong>STEP 4:</strong>  </p>
+<p>Change the file permissions.</p>
+<pre><code>$ chmod 755 duplicacy
+</code></pre>
+<p><strong>STEP 5:</strong>  </p>
+<p>Move <code>duplicacy</code> to the <code>/usr/bin</code> directory.</p>
+<pre><code>$ sudo mv duplicacy /usr/bin/
+</code></pre>
+<h2 id="initialize-the-remote-storage-and-repository">Initialize the remote storage and repository</h2>
+<p>The <code>duplicacy init</code> command is used to initialize the remote storage and the backup directory.</p>
+<pre><code>duplicacy init [command options] &lt;snapshot id&gt; &lt;storage url&gt;
+</code></pre>
+<p>The <code>&lt;snapshot id&gt;</code> refers to the name you want to give to your backup job.  <br />
+The <code>&lt;storage url&gt;</code> refers to the remote server and directory path for your backups.</p>
+<p>We will only use the following options:</p>
+<pre><code>-encrypt, -e          encrypt the storage with a password
+-storage-name &lt;name&gt;  assign a name to the storage
+</code></pre>
+<p><strong>Example scenario:</strong></p>
+<p>You have an <code>sftp</code> server named <strong>nacho.local</strong> that you want to use to backup your <strong>Photos</strong> directory.    <br />
+You have a directory named <strong>remotePhotos</strong> on the <strong>nacho.local</strong> <code>sftp</code> server. This is the directory to be used for the backups.  <br />
+You can connect to the <strong>nacho.local</strong> <code>sftp</code> server using <code>ssh</code> keys.  <br />
+You want to name the backup job <strong>photoBackup</strong>. This refers to the <code>&lt;snapshot id&gt;</code> option.  <br />
+You want to name the remote storage <strong>nachoStorage</strong>. This refers to the <code>-storage-name &lt;name&gt;</code> option.    </p>
+<blockquote>
+<p>For me, I would use <strong>sftp://curt@nacho.local/remotePhotos</strong> for the <code>&lt;storage url&gt;</code>.</p>
+</blockquote>
+<p><strong>STEP 1:</strong>      </p>
+<p>Initialize the remote storage and repository.</p>
+<pre><code>$ duplicacy init -e -storage-name nachoStorage photoBackup sftp://curt@nacho.local/remotePhotos
+</code></pre>
+<p>You will see the following prompts:</p>
+<pre><code>Enter SSH password:
+Enter the path of the private key file:
+Enter storage password for sftp://curt@nacho.local/remotePhotos:
+Re-enter storage password:
+</code></pre>
+<p><code>Enter SSH password</code>:&nbsp; Hit the <code>enter</code> key on your keybord to leave the password blank if you use <code>ssh</code> keys.       </p>
+<p><code>Enter the path of the private key file</code>:&nbsp; Type in the full path to your <strong>private</strong> <code>ssh</code> key. </p>
+<blockquote>
+<p>For me, I would enter <strong>/home/curt/.ssh/id_rsa</strong> for the path.  </p>
+</blockquote>
+<p><code>Enter storage password</code>:&nbsp; Type in the storage password you wish to use.</p>
+<p><strong>STEP 2:</strong>    </p>
+<p><strong>Duplicacy</strong> creates a configuration folder named <code>.duplicacy</code> after the initialization is completed.   </p>
+<p>Copy your <strong>private</strong> <code>ssh</code> key to this directory. Here is how I would copy it on my system:</p>
+<pre><code>$ cp /home/curt/.ssh/id_rsa /home/curt/Photos/.duplicacy/
+</code></pre>
 <p><strong>STEP 3:</strong>    </p>
+<p>Edit the <code>.duplicacy/preferences</code> file to change the <code>"keys":</code> line. Use a plan text editor such as <code>vim</code> or <code>nano</code>.</p>
+<pre><code>$ vim .duplicacy/preferences
+</code></pre>
+<p>Default setting:</p>
+<pre><code>&quot;keys&quot;: null,
+</code></pre>
+<p>Change <code>"keys": null,</code> to this:</p>
+<pre><code>&quot;keys&quot;: {
+            &quot;ssh_key_file&quot;: &quot;.duplicacy/id_rsa&quot;
+         },
+</code></pre>
+<blockquote>
+<p>Use a text editor such as <code>vim</code> or <code>nano</code> to edit the file because spacing is <strong>important</strong>.</p>
+</blockquote>
+<h2 id="running-the-backup-command">Running the backup command</h2>
+<p><strong>STEP 1:</strong>    </p>
+<p>Run the <code>duplicacy backup</code> command from the backup directory.</p>
+<pre><code>$ duplicacy backup -stats
+</code></pre>
+<p>You will be prompted to enter the storage password. 
+Enter the storage password you created when you initialized the repostiory.</p>
+<p>If you do not want to enter the storage password every time you run the backup, you can use the <code>DUPLICACY_&lt;STORAGENAME&gt;_PASSWORD</code> environment variable. If you want to automate your backups by running them from a <code>bash</code> script via <code>cron</code>, you will need to also use this variable.    </p>
+<p>If your storage password is <code>ThisIsNotAVerySecurePassword</code>, the command would like this in our example scenario:</p>
+<pre><code>export DUPLICACY_NACHOSTORAGE_PASSWORD=&quot;ThisIsNotAVerySecurePassword&quot;
+</code></pre>
+<p><strong>NOTE</strong>: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that <code>nachoStorage</code> needs to be written as <code>NACHOSTORAGE</code>.</p>
+<p>You can run this shell command before you run the <code>duplicacy backup</code> command or add it to a <code>bash</code> script.</p>
               
             </div>
           </div><footer>
@@ -127,5 +206,5 @@ The software does require a license but the command-line interface (CLI) version
 
 <!--
 MkDocs version : 1.3.0
-Build Date UTC : 2022-08-24 17:53:47.428914+00:00
+Build Date UTC : 2022-08-24 18:03:24.452276+00:00
 -->
