@@ -76,7 +76,7 @@ The software does require a license but the command-line interface (CLI) version
 <p>We’ll be using the <strong>CLI</strong> version for this tutorial.</p>
 <h2 id="installation">Installation</h2>
 <p><strong>STEP 1:</strong>   </p>
-<p>Pre-compiled binaries are availble for Linux, macOS, and Windows directly from the Duplicacy <a href="https://github.com/gilbertchen/duplicacy/releases">GitHub</a> repository.</p>
+<p>Pre-compiled binaries are available for Linux, macOS, and Windows directly from the Duplicacy <a href="https://github.com/gilbertchen/duplicacy/releases">GitHub</a> repository.</p>
 <p>Download the latest version for your system.</p>
 <pre><code>$ wget https://github.com/gilbertchen/duplicacy/releases/download/v2.7.2/duplicacy_linux_x64_2.7.2
 </code></pre>
@@ -85,7 +85,7 @@ The software does require a license but the command-line interface (CLI) version
 <pre><code>$ chmod +x duplicacy_linux_x64_2.7.2
 </code></pre>
 <p><strong>STEP 3:</strong>  </p>
-<p>Rename the file to <code>duplicacy</code>.</p>
+<p>Rename the file to <strong>duplicacy</strong>.</p>
 <pre><code>$ mv duplicacy_linux_x64_2.7.2 duplicacy
 </code></pre>
 <p><strong>STEP 4:</strong>  </p>
@@ -93,7 +93,7 @@ The software does require a license but the command-line interface (CLI) version
 <pre><code>$ chmod 755 duplicacy
 </code></pre>
 <p><strong>STEP 5:</strong>  </p>
-<p>Move <code>duplicacy</code> to the <code>/usr/bin</code> directory.</p>
+<p>Move the file to the <strong>/usr/bin</strong> directory.</p>
 <pre><code>$ sudo mv duplicacy /usr/bin/
 </code></pre>
 <h2 id="initialize-the-remote-storage-and-repository">Initialize the remote storage and repository</h2>
@@ -102,18 +102,20 @@ The software does require a license but the command-line interface (CLI) version
 </code></pre>
 <p>The <code>&lt;snapshot id&gt;</code> refers to the name you want to give to your backup job.  <br />
 The <code>&lt;storage url&gt;</code> refers to the remote server and directory path for your backups.</p>
-<p>We will only use the following options:</p>
+<p>We will only be using the following options:</p>
 <pre><code>-encrypt, -e          encrypt the storage with a password
 -storage-name &lt;name&gt;  assign a name to the storage
 </code></pre>
-<p><strong>Example scenario:</strong></p>
-<p>You have an <code>sftp</code> server named <strong>nacho.local</strong> that you want to use to backup your <strong>Photos</strong> directory.    <br />
-You have a directory named <strong>remotePhotos</strong> on the <strong>nacho.local</strong> <code>sftp</code> server. This is the directory to be used for the backups.  <br />
-You can connect to the <strong>nacho.local</strong> <code>sftp</code> server using <code>ssh</code> keys.  <br />
-You want to name the backup job <strong>photoBackup</strong>. This refers to the <code>&lt;snapshot id&gt;</code> option.  <br />
-You want to name the remote storage <strong>nachoStorage</strong>. This refers to the <code>-storage-name &lt;name&gt;</code> option.    </p>
+<p>An example scenario will make this easier to understand.</p>
+<ol>
+<li>The sftp server hostname: <strong>nacho.local</strong></li>
+<li>Directory to be backed up: <strong>/home/curt/Photos</strong> </li>
+<li>Backup directory on the <strong>sftp</strong> server: <strong>photobackup</strong></li>
+<li>Name of backup job: <strong>photoBackup</strong>. This refers to the <code>&lt;snapshot id&gt;</code> option.</li>
+<li>Name of remote storage: <strong>nachoStorage</strong>. This refers to the <code>-storage-name &lt;name&gt;</code> option.</li>
+</ol>
 <blockquote>
-<p>For me, I would use <strong>sftp://curt@nacho.local/remotePhotos</strong> for the <code>&lt;storage url&gt;</code>.</p>
+<p>For me, <strong>sftp://curt@nacho.local/remotePhotos</strong> would be the <code>&lt;storage url&gt;</code>.    </p>
 </blockquote>
 <p><strong>STEP 1:</strong>      </p>
 <p>Initialize the remote storage and repository.</p>
@@ -206,5 +208,5 @@ Enter the storage password you created when you initialized the repostiory.</p>
 
 <!--
 MkDocs version : 1.3.0
-Build Date UTC : 2022-08-24 18:20:16.807344+00:00
+Build Date UTC : 2022-08-24 20:56:33.357424+00:00
 -->
