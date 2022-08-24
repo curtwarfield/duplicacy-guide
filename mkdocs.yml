@@ -1,0 +1,5 @@
+site_name: Duplicacy Tutorial
+nav:
+   - Home: index.md
+
+theme: readthedocs
