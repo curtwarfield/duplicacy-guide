@@ -24,3 +24,7 @@ Make the file executable.
 ~~~
 $ chmod +x duplicacy_linux_x64_2.7.2
 ~~~
+
+**STEP 3:**    
+
+
