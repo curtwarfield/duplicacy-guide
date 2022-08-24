@@ -1,9 +1,9 @@
 # Introduction
 
-[Duplicacy](https://duplicacy.com) is state-of-the-art backup tool that has extensive cloud support. It also supports local disks and your own SFTP servers.     
+[Duplicacy](https://duplicacy.com) is state-of-the-art backup tool that has extensive cloud support. It also supports local disks and your own **sftp** servers.     
 
 Duplicacy is available as a web-based GUI or as a command line tool. 
-The software does require a license but the command-line interface (CLI) version is free for personal use.  
+The software does require a license but the **command-line interface** (CLI) version is free for personal use.  
   
 We’ll be using the **CLI** version for this tutorial.
 
@@ -138,4 +138,8 @@ Use the `DUPLICACY_<STORAGENAME>_PASSWORD` environment variable if you do not wa
 export DUPLICACY_NACHOSTORAGE_PASSWORD="ThisIsNotAVerySecurePassword"
 ~~~
 
-**NOTE**: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that `nachoStorage` needs to be written as `NACHOSTORAGE`.
+**NOTE**: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that `nachoStorage` would be written as `NACHOSTORAGE`.     
+  
+# Restoring backups    
+
+**STEP 1:**
