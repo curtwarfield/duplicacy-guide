@@ -11,7 +11,7 @@ We’ll be using the **CLI** version for this tutorial.
 
 **STEP 1:**   
 
-Pre-compiled binaries are availble for Linux, macOS, and Windows directly from the Duplicacy [GitHub](https://github.com/gilbertchen/duplicacy/releases) repository.
+Pre-compiled binaries are available for Linux, macOS, and Windows directly from the Duplicacy [GitHub](https://github.com/gilbertchen/duplicacy/releases) repository.
 
 Download the latest version for your system.
 ~~~
@@ -27,7 +27,7 @@ $ chmod +x duplicacy_linux_x64_2.7.2
    
 **STEP 3:**  
 
-Rename the file to `duplicacy`.
+Rename the file to **duplicacy**.
 ~~~
 $ mv duplicacy_linux_x64_2.7.2 duplicacy
 ~~~
@@ -41,7 +41,7 @@ $ chmod 755 duplicacy
 
 **STEP 5:**  
 
-Move `duplicacy` to the `/usr/bin` directory.
+Move the file to the **/usr/bin** directory.
 ~~~
 $ sudo mv duplicacy /usr/bin/
 ~~~
@@ -55,21 +55,21 @@ duplicacy init [command options] <snapshot id> <storage url>
 The `<snapshot id>` refers to the name you want to give to your backup job.    
 The `<storage url>` refers to the remote server and directory path for your backups.
 
-We will only use the following options:
+We will only be using the following options:
 ~~~
 -encrypt, -e          encrypt the storage with a password
 -storage-name <name>  assign a name to the storage
 ~~~
 
-**Example scenario:**
+An example scenario will make this easier to understand.
 
-You have an `sftp` server named **nacho.local** that you want to use to backup your **Photos** directory.      
-You have a directory named **remotePhotos** on the **nacho.local** `sftp` server. This is the directory to be used for the backups.    
-You can connect to the **nacho.local** `sftp` server using `ssh` keys.    
-You want to name the backup job **photoBackup**. This refers to the `<snapshot id>` option.    
-You want to name the remote storage **nachoStorage**. This refers to the `-storage-name <name>` option.    
-
-> For me, I would use **sftp://curt@nacho.local/remotePhotos** for the `<storage url>`.
+1. The sftp server hostname: **nacho.local**
+2. Directory to be backed up: **/home/curt/Photos** 
+3. Backup directory on the **sftp** server: **photobackup**
+4. Name of backup job: **photoBackup**. This refers to the `<snapshot id>` option.
+5. Name of remote storage: **nachoStorage**. This refers to the `-storage-name <name>` option.
+    
+> For me, **sftp://curt@nacho.local/remotePhotos** would be the `<storage url>`.    
 
 **STEP 1:**      
 
