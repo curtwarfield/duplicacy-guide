@@ -61,7 +61,7 @@ We will only be using the following options:
 -storage-name <name>  assign a name to the storage
 ~~~
 
-An example scenario will make this easier to understand.
+An example scenario will make things easier to understand.
 
 1. The sftp server hostname: **nacho.local**
 2. Directory to be backed up: **/home/curt/Photos** 
