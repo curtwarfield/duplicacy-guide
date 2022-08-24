@@ -69,7 +69,7 @@ An example scenario will make things easier to understand.
 4. Name of backup job: **photoBackup**. This refers to the `<snapshot id>` option.
 5. Name of remote storage: **nachoStorage**. This refers to the `-storage-name <name>` option.
 
-For me, **sftp://curt@nacho.local/remotePhotos** would be the complete `<storage url>`.    
+For me, **sftp://curt@nacho.local/photobackup** would be the complete `<storage url>`.    
 
 **STEP 1:**      
 
@@ -81,7 +81,7 @@ You will see the following prompts:
 ~~~
 Enter SSH password:
 Enter the path of the private key file:
-Enter storage password for sftp://curt@nacho.local/remotePhotos:
+Enter storage password for sftp://curt@nacho.local/photobackup:
 Re-enter storage password:
 ~~~
 
