@@ -143,3 +143,5 @@ export DUPLICACY_NACHOSTORAGE_PASSWORD="ThisIsNotAVerySecurePassword"
 # Restoring backups    
 
 **STEP 1:**
+
+To restore
