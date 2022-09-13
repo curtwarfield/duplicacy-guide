@@ -59,6 +59,7 @@ We will only be using the following options:
 ~~~
 -encrypt, -e          encrypt the storage with a password
 -storage-name <name>  assign a name to the storage
+-repository <path>    initialize a new repository at the specified path
 ~~~
 
 An example scenario will make things easier to understand.
@@ -75,7 +76,7 @@ For me, **sftp://curt@nacho.local/photobackup** would be the complete `<storage 
 
 Initialize the remote storage and repository. Run the following command from the directory you are backing up:
 ~~~
-$ duplicacy init -e -storage-name nachoStorage photoBackup sftp://curt@nacho.local/photobackup
+$ duplicacy init -e -storage-name nachoStorage -repository /home/curt/Photos photoBackup sftp://curt@nacho.local/photobackup
 ~~~
 You will see the following prompts:
 ~~~
@@ -86,21 +87,16 @@ Re-enter storage password:
 ~~~
 
 1. Hit `enter` to leave the password blank if you use **ssh** keys.       
-2. Type in the full path to your **private ssh** key. For me, I would enter **/home/curt/.ssh/id_rsa** for the path.  
+2. Hit `enter` to bypass specifying the path to your private **ssh** key. This will be configured later to automate this.   
 3. Type in a storage password you choose to use.
 
 **STEP 2:**    
 
 **Duplicacy** creates a configuration folder named **.duplicacy** in the current directory after the initialization is finished.   
 
-Copy your **private ssh** key to this directory. Here is how I would copy it on my system:
-~~~
-$ cp /home/curt/.ssh/id_rsa /home/curt/Photos/.duplicacy/
-~~~
+Edit the **.duplicacy/preferences** file with a plain text editor to change the **"keys":**&nbsp; line.    
 
-**STEP 3:**    
-
-Edit the **.duplicacy/preferences** file with a plain text editor to change the **"keys":**&nbsp; line.
+We'll be specifying the path to our private **ssh** key and **storage password** that was used for the initialization.
 ~~~
 $ vim .duplicacy/preferences
 ~~~
@@ -110,36 +106,23 @@ Default setting:
 "keys": null,
 ~~~
 
-Change the line to this:
+Using the following format, change the line to include your **storage password** and full path to your private **ssh** key. This is what it would look like for me:
 ~~~
-"keys": {
-            "ssh_key_file": ".duplicacy/id_rsa"
-         },
+ "keys": {
+            "password": "MySecretPassword",
+            "ssh_key_file": "/home/curt/.ssh/id_rsa"
+        },
 ~~~
 
 # Running the backup
 
 **STEP 1:**    
 
-Run the **duplicacy backup** command from the backup directory.
+Run the **duplicacy backup** command.
 ~~~
 $ duplicacy backup -stats
 ~~~
 
-You will be prompted to enter the storage password. 
-Enter the storage password you created when you initialized the repository.
-
-Use the `DUPLICACY_<STORAGENAME>_PASSWORD` environment variable if you do not want to type in the password every time you run the backup command.  
-
-* You can run the **export** command or specify this variable in a **bash** script if you want to use this.
-
-* For example, if your storage password was `ThisIsNotAVerySecurePassword`, you would run the following from your terminal or add it to a **bash** script:
-~~~
-export DUPLICACY_NACHOSTORAGE_PASSWORD="ThisIsNotAVerySecurePassword"
-~~~
-
-**NOTE**: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that `nachoStorage` would be written as `NACHOSTORAGE` using the storage name in this tutorial.     
-  
 # Restoring backups    
 
 **STEP 1:**
