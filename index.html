@@ -105,6 +105,7 @@ The <code>&lt;storage url&gt;</code> refers to the remote server and directory p
 <p>We will only be using the following options:</p>
 <pre><code>-encrypt, -e          encrypt the storage with a password
 -storage-name &lt;name&gt;  assign a name to the storage
+-repository &lt;path&gt;    initialize a new repository at the specified path
 </code></pre>
 <p>An example scenario will make things easier to understand.</p>
 <ol>
@@ -117,7 +118,7 @@ The <code>&lt;storage url&gt;</code> refers to the remote server and directory p
 <p>For me, <strong>sftp://curt@nacho.local/photobackup</strong> would be the complete <code>&lt;storage url&gt;</code>.    </p>
 <p><strong>STEP 1:</strong>      </p>
 <p>Initialize the remote storage and repository. Run the following command from the directory you are backing up:</p>
-<pre><code>$ duplicacy init -e -storage-name nachoStorage photoBackup sftp://curt@nacho.local/photobackup
+<pre><code>$ duplicacy init -e -storage-name nachoStorage -repository /home/curt/Photos photoBackup sftp://curt@nacho.local/photobackup
 </code></pre>
 <p>You will see the following prompts:</p>
 <pre><code>Enter SSH password:
@@ -127,45 +128,29 @@ Re-enter storage password:
 </code></pre>
 <ol>
 <li>Hit <code>enter</code> to leave the password blank if you use <strong>ssh</strong> keys.       </li>
-<li>Type in the full path to your <strong>private ssh</strong> key. For me, I would enter <strong>/home/curt/.ssh/id_rsa</strong> for the path.  </li>
+<li>Hit <code>enter</code> to bypass specifying the path to your private <strong>ssh</strong> key. This will be configured later to automate this.   </li>
 <li>Type in a storage password you choose to use.</li>
 </ol>
 <p><strong>STEP 2:</strong>    </p>
 <p><strong>Duplicacy</strong> creates a configuration folder named <strong>.duplicacy</strong> in the current directory after the initialization is finished.   </p>
-<p>Copy your <strong>private ssh</strong> key to this directory. Here is how I would copy it on my system:</p>
-<pre><code>$ cp /home/curt/.ssh/id_rsa /home/curt/Photos/.duplicacy/
-</code></pre>
-<p><strong>STEP 3:</strong>    </p>
-<p>Edit the <strong>.duplicacy/preferences</strong> file with a plain text editor to change the <strong>"keys":</strong>&nbsp; line.</p>
+<p>Edit the <strong>.duplicacy/preferences</strong> file with a plain text editor to change the <strong>"keys":</strong>&nbsp; line.    </p>
+<p>We'll be specifying the path to our private <strong>ssh</strong> key and <strong>storage password</strong> that was used for the initialization.</p>
 <pre><code>$ vim .duplicacy/preferences
 </code></pre>
 <p>Default setting:</p>
 <pre><code>&quot;keys&quot;: null,
 </code></pre>
-<p>Change the line to this:</p>
-<pre><code>&quot;keys&quot;: {
-            &quot;ssh_key_file&quot;: &quot;.duplicacy/id_rsa&quot;
-         },
+<p>Using the following format, change the line to include your <strong>storage password</strong> and full path to your private <strong>ssh</strong> key. This is what it would look like for me:</p>
+<pre><code> &quot;keys&quot;: {
+            &quot;password&quot;: &quot;MySecretPassword&quot;,
+            &quot;ssh_key_file&quot;: &quot;/home/curt/.ssh/id_rsa&quot;
+        },
 </code></pre>
 <h1 id="running-the-backup">Running the backup</h1>
 <p><strong>STEP 1:</strong>    </p>
-<p>Run the <strong>duplicacy backup</strong> command from the backup directory.</p>
+<p>Run the <strong>duplicacy backup</strong> command.</p>
 <pre><code>$ duplicacy backup -stats
 </code></pre>
-<p>You will be prompted to enter the storage password. 
-Enter the storage password you created when you initialized the repository.</p>
-<p>Use the <code>DUPLICACY_&lt;STORAGENAME&gt;_PASSWORD</code> environment variable if you do not want to type in the password every time you run the backup command.  </p>
-<ul>
-<li>
-<p>You can run the <strong>export</strong> command or specify this variable in a <strong>bash</strong> script if you want to use this.</p>
-</li>
-<li>
-<p>For example, if your storage password was <code>ThisIsNotAVerySecurePassword</code>, you would run the following from your terminal or add it to a <strong>bash</strong> script:</p>
-</li>
-</ul>
-<pre><code>export DUPLICACY_NACHOSTORAGE_PASSWORD=&quot;ThisIsNotAVerySecurePassword&quot;
-</code></pre>
-<p><strong>NOTE</strong>: You need to use capitalization for the remote storage name regardless of the actual name of the storage. This means that <code>nachoStorage</code> would be written as <code>NACHOSTORAGE</code> using the storage name in this tutorial.     </p>
 <h1 id="restoring-backups">Restoring backups</h1>
 <p><strong>STEP 1:</strong></p>
 <p>To restore</p>
@@ -211,5 +196,5 @@ Enter the storage password you created when you initialized the repository.</p>
 
 <!--
 MkDocs version : 1.3.0
-Build Date UTC : 2022-09-05 20:46:41.118336+00:00
+Build Date UTC : 2022-09-13 16:04:06.243845+00:00
 -->
